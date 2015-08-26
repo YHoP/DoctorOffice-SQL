@@ -4,7 +4,7 @@
 </p>
 
 #foreach($patient in $patients)
-<p>$patient.getPatientName() $patient.getDob() </p>
+<a href="/doctors/$doctor.getId()/patients/$patient.getId()">$patient.getPatientName() $patient.getDob()  </a>
 #end
 
 <form action="/doctors/$doctor.getId()/new" method="post">
