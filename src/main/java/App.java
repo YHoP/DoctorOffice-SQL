@@ -33,13 +33,32 @@ public class App {
 
   get("/doctors/:id", (request, response) -> {
     HashMap<String, Object> model = new HashMap<String, Object>();
-    model.put("doctor", Doctor.find(Integer.parseInt(request.params(":id"))));
 
-    model.put("doctors", Doctor.all());
-    model.put("template", "templates/patient_form.vtl");
-
+    Doctor currentDoc = Doctor.find(Integer.parseInt(request.params(":id")));
+    model.put("doctor", currentDoc);
+    // model.put("patients", currentDoc.getPatientsList());
+    model.put("template", "templates/doctor.vtl");
     return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
+
+
+  post("/doctors/:id/new", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+
+    String patient_name = request.queryParams("patient_name");
+    int doctor_id = Integer.parseInt(request.queryParams("doctor_id"));
+    String dob = request.queryParams("dob");
+
+    Patient newPatient = new Patient(patient_name, doctor_id, dob);
+    newPatient.save();
+
+    Doctor currentDoc = Doctor.find(Integer.parseInt(request.params(":id")));
+    model.put("doctor", currentDoc);
+    // model.put("patients", currentDoc.getPatientsList());
+    model.put("template", "templates/doctor.vtl");
+    return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine());
+
 
   post("/patients", (request, response) -> {
     HashMap<String, Object> model = new HashMap<String, Object>();

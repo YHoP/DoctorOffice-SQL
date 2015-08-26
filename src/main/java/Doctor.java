@@ -72,21 +72,27 @@ public class Doctor {
     }
   }
 
+
   public List<Patient> getPatients() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM patients where id=:id";
+      String sql = "SELECT * FROM patients where doctor_id=:id";
       return con.createQuery(sql)
        .addParameter("id", this.id)
        .executeAndFetch(Patient.class);
     }
   }
 
+  public List<Patient> getPatientsList(){
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM doctors JOIN patients ON (patients.doctor_id = doctors.id) WHERE doctors.id=:id";
+      return con.createQuery(sql).addParameter("id", this.id).executeAndFetch(Patient.class);
+  }
+}
+
   public int count(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT count(*) FROM patients where doctor_id=:id";
-      return (int) con.createQuery(sql)
-        .addParameter("id",id)
-        .executeScalar(Integer.class);
+      return (int) con.createQuery(sql).addParameter("id",id).executeScalar(Integer.class);
     }
  }
 

@@ -1,0 +1,9 @@
+<!-- <p>Patients: $doctor.getPatientsList()</p> -->
+
+<!-- #foreach($patient in $patients)
+  #if($patient.getDoctorId() == $doctor.getId())
+ <h3>$patient.getPatientName()  $patient.getDoctorId()  $patient.getDob()</h3>
+  #else
+    <p></p>
+  #end
+#end -->

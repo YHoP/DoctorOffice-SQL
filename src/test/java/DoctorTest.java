@@ -12,20 +12,34 @@ public class DoctorTest {
     assertEquals(Doctor.all().size(), 0);
   }
 
-  // @Test
-  // public void equals_returnsTrueIfNamesAreTheSame() {
-  //   Category firstCategory = new Category("Banking");
-  //   Category secondCategory = new Category("Banking");
-  //   assertTrue(firstCategory.equals(secondCategory));
-  // }
-  //
+  @Test
+  public void count_returnsCorrectCountsIfDoctorIdAreTheSame() {
+    Doctor newDoctor = new Doctor("Banking", 1);
+    newDoctor.save();
+    Patient patientOne = new Patient("Anna", 1, "01-01-2001");
+    patientOne.save();
+    assertEquals(1, newDoctor.count(1));
+  }
+
+  @Test
+  public void getPatientListMatchDoctorID() {
+    Doctor newDoctor = new Doctor("Tom", 2);
+    newDoctor.save();
+    Patient patientOne = new Patient("Anna", 2, "01-01-2001");
+    patientOne.save();
+    Patient patientTwo = new Patient("Bebe", 2, "02-02-2002");
+    patientTwo.save();
+    assertEquals(Patient.all(), newDoctor.getPatients());
+  }
+
+
   // @Test
   // public void save_savesIntoDatabase_true() {
   //   Category newCategory = new Category("Banking");
   //   newCategory.save();
   //   assertTrue(Category.all().get(0).equals(newCategory));
   // }
-  //
+
   // @Test
   // public void find_findsCategoryInDatabase_true() {
   //   Category myCategory = new Category("Banking");

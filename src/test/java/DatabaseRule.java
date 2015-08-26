@@ -15,8 +15,6 @@ public class DatabaseRule extends ExternalResource {
       con.createQuery(deleteDoctorQuery).executeUpdate();
       con.createQuery(deletePatientQuery).executeUpdate();
       con.createQuery(deleteSpecialtyQuery).executeUpdate();
-
-
     }
   }
 }
