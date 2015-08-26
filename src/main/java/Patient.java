@@ -8,7 +8,7 @@ public class Patient {
   private int id;
   private String patient_name;
   private String dob;
-  SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+  //SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
   private int doctor_id;
 
   public int getId() {
@@ -57,9 +57,9 @@ public class Patient {
   try(Connection con = DB.sql2o.open()) {
     String sql = "INSERT INTO patients (patient_name, doctor_id, dob) VALUES (:patient_name, :doctor_id, :dob)";
     this.id = (int) con.createQuery(sql, true)
-      .addParameter("patient_name", this.patient_name)
-      .addParameter("doctor_id", this.doctor_id)
-      .addParameter("dob", this.dob)
+      .addParameter("patient_name", patient_name)
+      .addParameter("doctor_id", doctor_id)
+      .addParameter("dob", dob)
       .executeUpdate()
       .getKey();
    }

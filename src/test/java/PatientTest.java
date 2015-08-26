@@ -20,10 +20,10 @@ public class PatientTest {
      }
 
      @Test
-      public void save_returnsTrueIfPatientNameAretheSame() {
+      public void save_returnsTrueIfPatientIDAretheSame() {
        Patient myPatient = new Patient("John", 1, "01-01-2000");
        myPatient.save();
-       assertTrue(Patient.all().get(0).equals(myPatient));
+       assertEquals(Patient.all().get(0).getId(), myPatient.getId());
       }
 
     //   @Test
