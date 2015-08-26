@@ -12,6 +12,21 @@ public class DoctorTest {
     assertEquals(Doctor.all().size(), 0);
   }
 
+
+  @Test
+  public void getPatientListMatchDoctorID() {
+    Doctor newDoctor = new Doctor("Tom", 2);
+    newDoctor.save();
+    Patient patientOne = new Patient("Anna", newDoctor.getId(), "01-01-2001");
+    patientOne.save();
+    Patient patientTwo = new Patient("Bebe", newDoctor.getId(), "02-02-2002");
+    patientTwo.save();
+//    Patient newPatient = Patient.all().get(0);
+    Patient doctorPatient = newDoctor.getPatients().get(0);
+
+    assertTrue(doctorPatient.getPatientName().equals("Anna"));
+  }
+
   @Test
   public void count_returnsCorrectCountsIfDoctorIdAreTheSame() {
     Doctor newDoctor = new Doctor("Banking", 1);
@@ -22,15 +37,13 @@ public class DoctorTest {
   }
 
   @Test
-  public void getPatientListMatchDoctorID() {
-    Doctor newDoctor = new Doctor("Tom", 2);
-    newDoctor.save();
-    Patient patientOne = new Patient("Anna", 2, "01-01-2001");
-    patientOne.save();
-    Patient patientTwo = new Patient("Bebe", 2, "02-02-2002");
-    patientTwo.save();
-    assertEquals(Patient.all(), newDoctor.getPatients());
+  public void equals_returnsTrueIfDoctorsAreTheSame() {
+      Doctor firstDoctor = new Doctor("Tom", 2);
+      Doctor secondDoctor = new Doctor("Tom", 2);
+      assertTrue(firstDoctor.equals(secondDoctor));
   }
+
+
 
 
   // @Test

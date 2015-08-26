@@ -12,6 +12,19 @@ public class SpecialtyTest {
     assertEquals(Specialty.all().size(), 0);
   }
 
+  @Test
+  public void equals_returnsTrueIfDoctorsAreTheSame() {
+      Doctor firstDoctor = new Doctor("Tom", 2);
+      Doctor secondDoctor = new Doctor("Tom", 2);
+      assertTrue(firstDoctor.equals(secondDoctor));
+  }
+
+  public void equals_returnsTrueIfPatientsAreTheSame() {
+      Patient firstPatient = new Patient("Tom", 2, "01-01-2001");
+      Patient secondPatient = new Patient("Tom", 2, "01-01-2001");
+      assertTrue(firstPatient.equals(secondPatient));
+  }
+
   // @Test
   // public void equals_returnsTrueIfNamesAreTheSame() {
   //   Category firstCategory = new Category("Banking");
