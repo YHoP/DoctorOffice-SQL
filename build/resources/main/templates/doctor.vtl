@@ -4,7 +4,7 @@
 </p>
 
 #foreach($patient in $patients)
-<a href="/doctors/$doctor.getId()/patients/$patient.getId()">$patient.getPatientName() $patient.getDob()  </a>
+<a href="/doctors/$doctor.getId()/patients/$patient.getId()">$patient.getPatientName() $patient.getDob()  </a><br>
 #end
 
 <form action="/doctors/$doctor.getId()/new" method="post">
@@ -13,9 +13,6 @@
 
   <label for="dob">Date of Birth</label>
   <input id="dob" name="dob" type="text"><br>
-
-  <label for="doctor_id">Doctor Id</label>
-  <input id="doctor_id" name="doctor_id" type="text"><br>
 
   <button type="submit" class="btn btn-success">Submit</button>
 </form>
