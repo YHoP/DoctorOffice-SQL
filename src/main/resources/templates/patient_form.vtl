@@ -1,20 +1,11 @@
 
 <p>
-  Add a Patient:
+  Update Patient Info:
 </p>
-<form action="/patients" method="post">
-  <label for="patient_name">Patient name</label>
-  <input id="patient_name" name="patient_name" type="text">
+<form action="/doctors/$patient.getDoctorId()/patients/$patient.getId()/updateName" method="post">
+  <label for="patient_name" >Patient name</label>
+  <input id="patient_name" name="patient_name" type="text" value="$patient.getPatientName()">
 
-  <label for="dob">Date of Birth</label>
-  <input id="dob" name="dob" type="text">
-
-  <label for="doctor_id">Doctor Id</label>
-  <input id="doctor_id" name="doctor_id" type="text">
 
   <button type="submit" class="btn btn-success">Submit</button>
 </form>
-
-  #foreach($patient in $patients)
-   <h3>$patient.getPatientName()  $patient.getDoctorId()  $patient.getDob()</h3>
-  #end

@@ -41,7 +41,7 @@ public class App {
     return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
 
-  get("/doctors/:docId/patients/:id", (request, response) -> {
+  get("/doctors/:docId/patients/:id/delete", (request, response) -> {
     HashMap<String, Object> model = new HashMap<String, Object>();
 
     Doctor currentDoc = Doctor.find(Integer.parseInt(request.params(":docId")));
@@ -73,22 +73,34 @@ public class App {
   }, new VelocityTemplateEngine());
 
 
-  // post("/patients", (request, response) -> {
-  //   HashMap<String, Object> model = new HashMap<String, Object>();
-  //
-  //
-  //   String patient_name = request.queryParams("patient_name");
-  //   int doctor_id = Integer.parseInt(request.queryParams("doctor_id"));
-  //   String dob = request.queryParams("dob");
-  //
-  //   Patient newPatient = new Patient(patient_name, doctor_id, dob);
-  //   newPatient.save();
-  //
-  //   model.put("patients",Patient.all());
-  //   model.put("template", "templates/patient_form.vtl");
-  //
-  //   return new ModelAndView(model, layout);
-  // }, new VelocityTemplateEngine());
+  get("/doctors/:docId/patients/:id/update", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+
+    Patient patient = Patient.find(Integer.parseInt(request.params(":id")));
+    // Doctor currentDoc = Doctor.find(Integer.parseInt(request.params(":docId")));
+
+    model.put("patient", patient);
+    model.put("template", "templates/patient_form.vtl");
+
+    return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine());
+
+  post("/doctors/:docId/patients/:id/updateName", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+
+    Doctor currentDoc = Doctor.find(Integer.parseInt(request.params(":docId")));
+
+    String doctorId = request.params(":docId");
+    String patientId = request.params(":id");
+    String patientName = request.queryParams("patient_name");
+
+    Patient currentPatient = Patient.find(Integer.parseInt(request.params(":id")));
+    currentPatient.updateName(patientName);
+
+    model.put("doctor", currentDoc);
+    response.redirect("/doctors/" + doctorId);
+    return null;
+  });
 
 
    }
