@@ -46,12 +46,14 @@ public class App {
 
     Doctor currentDoc = Doctor.find(Integer.parseInt(request.params(":docId")));
     model.put("doctor", currentDoc);
+    String doctorId = request.params(":docId");
 
     Patient currentPatient = Patient.find(Integer.parseInt(request.params(":id")));
     currentPatient.delete();
-    model.put("template", "templates/patientPage.vtl");
-    return new ModelAndView(model, layout);
-  }, new VelocityTemplateEngine());
+    // model.put("template", "templates/doctor.vtl");
+    response.redirect("/doctors/" +doctorId);
+    return null;
+  });
 
   post("/doctors/:id/new", (request, response) -> {
     HashMap<String, Object> model = new HashMap<String, Object>();
