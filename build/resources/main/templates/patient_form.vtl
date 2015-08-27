@@ -1,11 +1,39 @@
+<h2>$doctor.getName()</h2><br>
 
-<p>
-  Update Patient Info:
-</p>
-<form action="/doctors/$patient.getDoctorId()/patients/$patient.getId()/updateName" method="post">
-  <label for="patient_name" >Patient name</label>
-  <input id="patient_name" name="patient_name" type="text" value="$patient.getPatientName()">
+<h3>Add a new patient</h3>
+<form action="/doctors/$doctor.getId()/new" method="post">
 
+  <label for="patient_name">Patient name</label>
+  <input id="patient_name" name="patient_name" type="text"><br>
+
+  <label for="dob">Date of Birth</label>
+  <input id="dob" name="dob" type="text"><br>
 
   <button type="submit" class="btn btn-success">Submit</button>
 </form>
+
+<br>
+
+<h3>Patient List</h3>
+<table style="width:80%">
+  <tr>
+    <td>Patient Name</td>
+    <td>Patient Date of Birth</td>
+    <td></td>
+    <td></td>
+  </tr>
+#foreach($patient in $patients)
+<tr>
+  <td>$patient.getPatientName()</td>
+  <td>$patient.getDob()</td>
+  <td>
+    <a href="/doctors/$doctor.getId()/patients/$patient.getId()/delete">
+    <button class="btn btn-danger">Delete</button></a>
+    </td>
+  <td>
+    <a href="/doctors/$doctor.getId()/patients/$patient.getId()/update">
+    <button class="btn btn-info">Update</button></a>
+    </td>
+</tr>
+#end
+</table>

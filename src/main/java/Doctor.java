@@ -19,7 +19,6 @@ public class Doctor {
     return specialty_id;
   }
 
-
   public Doctor(String name, int specialty_id) {
     this.name = name;
     this.specialty_id = specialty_id;
@@ -72,6 +71,14 @@ public class Doctor {
     }
   }
 
+  public String getSpecialtyDescription() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT specialty FROM specialties where id=:specialty_id";
+      return con.createQuery(sql)
+       .addParameter("specialty_id", this.specialty_id)
+       .executeScalar(String.class);
+    }
+  }
 
   public List<Patient> getPatients() {
     try(Connection con = DB.sql2o.open()) {
@@ -82,28 +89,33 @@ public class Doctor {
     }
   }
 
-//   public List<Patient> getPatientsList(){
-//     try(Connection con = DB.sql2o.open()) {
-//     String sql = "SELECT * FROM patients WHERE doctor_id=:id";
-//       return con.createQuery(sql).addParameter("id", this.id).executeAndFetch(Patient.class);
-//   }
-// }
-
-
-  // public static Patient getPatientsList(int id){
-  //   try(Connection con = DB.sql2o.open()) {
-  //   String sql = "SELECT * FROM patients WHERE doctor_id=:id";
-  //     Patient docPatient = con.createQuery(sql).addParameter("id", id).executeAndFetch(Patient.class);
-  //     return docPatient;
-  //   }
-  // }
-
-
   public int count(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT count(*) FROM patients where doctor_id=:id";
-      return (int) con.createQuery(sql).addParameter("id",id).executeScalar(Integer.class);
+      return (int) con.createQuery(sql)
+        .addParameter("id",id)
+        .executeScalar(Integer.class);
     }
+ }
+
+ public void updateName(String docName) {
+   try(Connection con = DB.sql2o.open()) {
+     String sql = "UPDATE doctors SET name=:name WHERE id=:id";
+     con.createQuery(sql)
+       .addParameter("name", docName)
+       .addParameter("id", this.id)
+       .executeUpdate();
+   }
+ }
+
+ public void updateSpecialty(int specialty_id) {
+   try(Connection con = DB.sql2o.open()) {
+     String sql = "UPDATE doctors SET specialty_id=specialty_id WHERE id=:id";
+     con.createQuery(sql)
+       .addParameter("specialty_id", specialty_id)
+       .addParameter("id", this.id)
+       .executeUpdate();
+   }
  }
 
 }

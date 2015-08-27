@@ -8,7 +8,6 @@ public class Patient {
   private int id;
   private String patient_name;
   private String dob;
-  //SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
   private int doctor_id;
 
   public int getId() {
@@ -74,9 +73,27 @@ public class Patient {
    }
  }
 
+ public List<Doctor> getSpecialty() {
+   try(Connection con = DB.sql2o.open()) {
+     String sql = "SELECT * FROM doctors where is=:doctor_id";
+     return con.createQuery(sql)
+      .addParameter("doctor_id", this.doctor_id)
+      .executeAndFetch(Doctor.class);
+   }
+ }
+
+ public String getDoctorName() {
+   try(Connection con = DB.sql2o.open()) {
+     String sql = "SELECT name FROM doctors where id=:doctor_id";
+     return (String) con.createQuery(sql)
+      .addParameter("doctor_id", this.doctor_id)
+      .executeScalar(String.class);
+   }
+ }
+
  public void delete() {
   try(Connection con = DB.sql2o.open()) {
-  String sql = "DELETE FROM patients WHERE id = :id;";
+  String sql = "DELETE FROM patients WHERE id=:id;";
   con.createQuery(sql)
     .addParameter("id", id)
     .executeUpdate();
@@ -85,9 +102,19 @@ public class Patient {
 
   public void updateName(String name) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE patients SET patient_name = :name WHERE id = :id";
+      String sql = "UPDATE patients SET patient_name=:name WHERE id=:id";
       con.createQuery(sql)
         .addParameter("name", name)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
+  public void updateDoB(String dob) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE patients SET dob=dob WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("dob", dob)
         .addParameter("id", this.id)
         .executeUpdate();
     }

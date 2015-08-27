@@ -1,0 +1,25 @@
+<h2>Patient Info: </h2><br>
+
+<form action="/doctors/$patient.getDoctorId()/patients/$patient.getId()/updateName" method="post">
+<label for="patient_name" >Patient name</label>
+<input id="patient_name" name="patient_name" type="text" value="$patient.getPatientName()">
+
+
+<button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<h3>Patient List</h3>
+<table style="width:60%">
+  <tr>
+    <td>Patient Name</td>
+    <td>Patient Date of Birth</td>
+    <td>Primary Doctor</td>
+  </tr>
+#foreach($patient in $patients)
+<tr>
+  <td>$patient.getPatientName()</td>
+  <td>$patient.getDob()</td>
+  <td>$patient.getDoctorId()</td>
+</tr>
+#end
+</table>

@@ -1,0 +1,30 @@
+<h2>Add a Doctor:</h2><br>
+
+<form action="/doctors/new" method="post">
+<div class="form-group">
+  <label for="specialty_id">Select the doctor's specialty </label>
+  <select id="specialty_id" name="specialty_id" type="text">
+    #foreach($specialty in $specialties)
+      <option value="$specialty.getId()">$specialty.getSpecialty()</option>
+    #end
+  </select>
+  <label for="name">Doctor's name </label>
+  <input id="name" name="name" type="text">
+  <button type="submit" class="btn btn-success">Submit</button>
+</div>
+</form><br>
+
+<table style="width:60%">
+  <tr>
+    <td>Doctor Name</td>
+    <td>Specialty</td>
+    <td>Patient Count</td>
+  </tr>
+  #foreach($doctor in $doctors)
+  <tr>
+    <td><a href="/doctors/$doctor.getId()">$doctor.getName()</a></td>
+    <td><a href="/specialties/$doctor.getSpecialtyId()">$doctor.getSpecialtyDescription()</a></td>
+    <td>$doctor.count()</td>
+  </tr>
+  #end
+</table>

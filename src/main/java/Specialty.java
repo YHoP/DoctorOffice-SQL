@@ -9,6 +9,7 @@ public class Specialty {
   public int getId() {
     return id;
   }
+
   public String getSpecialty() {
     return specialty;
   }
@@ -63,4 +64,12 @@ public class Specialty {
        .executeAndFetch(Doctor.class);
     }
   }
+
+  public int count(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT count(*) FROM doctors where specialty_id=:id";
+      return (int) con.createQuery(sql).addParameter("id",id).executeScalar(Integer.class);
+    }
+ }
+
 }
