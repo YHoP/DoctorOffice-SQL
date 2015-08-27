@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SpecialtyTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2015-08-26T21:01:17" hostname="epicodus-113.local" time="0.014">
-  <properties/>
-  <testcase name="equals_returnsTrueIfDoctorsAreTheSame" classname="SpecialtyTest" time="0.005"/>
-  <testcase name="all_emptyAtFirst" classname="SpecialtyTest" time="0.009"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
