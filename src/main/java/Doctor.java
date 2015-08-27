@@ -44,19 +44,20 @@ public class Doctor {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql ="INSERT INTO doctors (name) values (:name)";
+      String sql ="INSERT INTO doctors (name, specialty_id) values (:name, :specialty_id)";
       this.id = (int) con.createQuery(sql,true)
       .addParameter("name", this.name)
+      .addParameter("specialty_id", this.specialty_id)
       .executeUpdate()
       .getKey();
     }
   }
 
-  public static Doctor find(int id ) {
+  public static Doctor find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql ="SELECT * FROM doctors WHERE id=:id";
       Doctor doctor = con.createQuery(sql)
-      .addParameter("id",id)
+      .addParameter("id", id)
       .executeAndFetchFirst(Doctor.class);
       return doctor;
     }
@@ -75,8 +76,8 @@ public class Doctor {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT specialty FROM specialties where id=:specialty_id";
       return con.createQuery(sql)
-       .addParameter("specialty_id", this.specialty_id)
-       .executeScalar(String.class);
+             .addParameter("specialty_id", this.specialty_id)
+             .executeAndFetchFirst(String.class);
     }
   }
 
@@ -89,12 +90,12 @@ public class Doctor {
     }
   }
 
-  public int count(int id) {
+  public int count() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT count(*) FROM patients where doctor_id=:id";
       return (int) con.createQuery(sql)
-        .addParameter("id",id)
-        .executeScalar(Integer.class);
+                  .addParameter("id", id)
+                  .executeAndFetchFirst(Integer.class);
     }
  }
 

@@ -26,7 +26,7 @@ public class Patient {
     return patient_name;
   }
 
-  public Patient(String patient_name, int doctor_id, String dob) {
+  public Patient(String patient_name, String dob, int doctor_id) {
     this.patient_name = patient_name;
     this.dob = dob;
     this.doctor_id = doctor_id;
@@ -46,7 +46,7 @@ public class Patient {
   }
 
   public static List<Patient> all() {
-  String sql = "SELECT * FROM patients";
+  String sql = "SELECT * FROM patients ORDER BY patient_name";
   try(Connection con = DB.sql2o.open()) {
     return con.createQuery(sql).executeAndFetch(Patient.class);
   }
@@ -54,11 +54,11 @@ public class Patient {
 
   public void save() {
   try(Connection con = DB.sql2o.open()) {
-    String sql = "INSERT INTO patients (patient_name, doctor_id, dob) VALUES (:patient_name, :doctor_id, :dob)";
+    String sql = "INSERT INTO patients (patient_name, dob, doctor_id) VALUES (:patient_name, :dob, :doctor_id)";
     this.id = (int) con.createQuery(sql, true)
       .addParameter("patient_name", patient_name)
-      .addParameter("doctor_id", doctor_id)
       .addParameter("dob", dob)
+      .addParameter("doctor_id", doctor_id)
       .executeUpdate()
       .getKey();
    }
@@ -87,7 +87,7 @@ public class Patient {
      String sql = "SELECT name FROM doctors where id=:doctor_id";
      return (String) con.createQuery(sql)
       .addParameter("doctor_id", this.doctor_id)
-      .executeScalar(String.class);
+      .executeAndFetchFirst(String.class);
    }
  }
 

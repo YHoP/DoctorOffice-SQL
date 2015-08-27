@@ -1,31 +1,28 @@
-<h2>$specialty.getSpecialty()</h2>
+<h2>$specialty.getSpecialty()</h2><br>
 
-<form action="/specialties/new" method="post">
+<form action="/specialties/$specialty.getId()/new" method="post">
 <div class="form-group">
-  <label for="specialty">Specialty : </label>
-  <input id="specialty" name="specialty" type="text">
+  <label for="specialty_id">Select the doctor's specialty </label>
+  <select id="specialty_id" name="specialty_id" type="text">
+    #foreach($specialty in $specialties)
+      <option value="$specialty.getId()">$specialty.getSpecialty()</option>
+    #end
+  </select>
+  <label for="name">Doctor's name </label>
+  <input id="name" name="name" type="text">
   <button type="submit" class="btn btn-success">Submit</button>
 </div>
-</form>
+</form><br>
 
-<br>
 <table style="width:60%">
   <tr>
-    <td>Specialties</td>
-    <td>Doctor Count</td>
+    <td>Doctor Name</td>
+    <td>Patient Count</td>
   </tr>
-  #foreach($specialty in $specialties)
+  #foreach($doctor in $doctors)
   <tr>
-    <td>$specialty.getSpecialty()</td>
-    <td>$specialty.count()</td>
+    <td><a href="/doctors/$doctor.getId()">Dr. $doctor.getName()</a></td>
+    <td>$doctor.count()</td>
   </tr>
   #end
-</table><br>
-<br><br><br><br>
-<table style="width:60%">
-  <tr>
-    <td><a href="/specialties"><button class="btn btn-info">View by specialties</button></a></td>
-    <td><a href="/doctors"><button class="btn btn-success">View by doctors</button></a></td>
-    <td><a href="/patients"><button class="btn btn-warning">View by patients</button></a></td>
-  </tr>
 </table>

@@ -30,7 +30,7 @@ public class Specialty {
   }
 
   public static List<Specialty> all() {
-    String sql ="SELECT id, specialty FROM specialties";
+    String sql ="SELECT id, specialty FROM specialties ORDER BY specialty";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Specialty.class);
     }
@@ -58,17 +58,19 @@ public class Specialty {
 
   public List<Doctor> getDoctors() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM doctors where specialty_id=:id";
+      String sql = "SELECT * FROM doctors WHERE specialty_id=:id";
       return con.createQuery(sql)
        .addParameter("id", this.id)
        .executeAndFetch(Doctor.class);
     }
   }
 
-  public int count(int id) {
+  public int count() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT count(*) FROM doctors where specialty_id=:id";
-      return (int) con.createQuery(sql).addParameter("id",id).executeScalar(Integer.class);
+      return (int) con.createQuery(sql)
+                  .addParameter("id", id)
+                  .executeScalar(Integer.class);
     }
  }
 
