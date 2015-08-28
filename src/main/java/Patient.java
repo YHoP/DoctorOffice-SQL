@@ -110,14 +110,25 @@ public class Patient {
     }
   }
 
-  public void updateDoB(String dob) {
+  public void updateDob(String dob) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE patients SET dob=dob WHERE id=:id";
+      String sql = "UPDATE patients SET dob=:dob WHERE id=:id";
       con.createQuery(sql)
         .addParameter("dob", dob)
         .addParameter("id", this.id)
         .executeUpdate();
     }
   }
+
+  public void updateDoctorId(int doctor_id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE patients SET doctor_id=:doctor_id WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("doctor_id", doctor_id)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
 
 }

@@ -26,13 +26,13 @@
   <td><a href="/patients/$patient.getId()">$patient.getPatientName()</a></td>
   <td>$patient.getDob()</td>
   <td>
+    <a href="/patients/$patient.getId()">
+    <button class="btn btn-info">Edit</button></a>
+  </td>
+  <td>
     <a href="/doctors/$doctor.getId()/patients/$patient.getId()/delete">
     <button class="btn btn-danger">Delete</button></a>
-    </td>
-  <td>
-    <a href="/doctors/$doctor.getId()/patients/$patient.getId()/update">
-    <button class="btn btn-info">Update</button></a>
-    </td>
+  </td>
 </tr>
 #end
 </table>

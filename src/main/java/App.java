@@ -124,6 +124,37 @@ public class App {
     return null;
   });
 
+  get("/patients/:id", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+
+    Patient thisPatient = Patient.find(Integer.parseInt(request.params(":id")));
+
+    model.put("patient", thisPatient);
+    model.put("doctors", Doctor.all());
+    model.put("template", "templates/patient.vtl");
+    return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine());
+
+  post("/patients/:id/update", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+
+    int patient_id = Integer.parseInt(request.params(":id"));
+    Patient thisPatient = Patient.find(patient_id);
+    String patient_name = request.queryParams("patient_name");
+    String dob = request.queryParams("dob");
+    int doctor_id = Integer.parseInt(request.queryParams("doctor_id"));
+    thisPatient.updateName(patient_name);
+    thisPatient.updateDob(dob);
+    thisPatient.updateDoctorId(doctor_id);
+
+    model.put("patient", thisPatient);
+    model.put("doctors", Doctor.all());
+    // model.put("template", "templates/patient_form.vtl");
+    response.redirect("/patients/" + patient_id);
+    return null;
+  });
+
+
   get("/doctors/:docId/patients/:id/delete", (request, response) -> {
     HashMap<String, Object> model = new HashMap<String, Object>();
 
@@ -138,35 +169,34 @@ public class App {
     return null;
   });
 
-  get("/doctors/:docId/patients/:id/update", (request, response) -> {
-    HashMap<String, Object> model = new HashMap<String, Object>();
+  // get("/doctors/:docId/patients/:id/update", (request, response) -> {
+  //   HashMap<String, Object> model = new HashMap<String, Object>();
+  //
+  //   Patient patient = Patient.find(Integer.parseInt(request.params(":id")));
+  //   // Doctor currentDoc = Doctor.find(Integer.parseInt(request.params(":docId")));
+  //
+  //   model.put("patient", patient);
+  //   model.put("template", "templates/patient_form.vtl");
+  //
+  //   return new ModelAndView(model, layout);
+  // }, new VelocityTemplateEngine());
 
-    Patient patient = Patient.find(Integer.parseInt(request.params(":id")));
-    // Doctor currentDoc = Doctor.find(Integer.parseInt(request.params(":docId")));
-
-    model.put("patient", patient);
-    model.put("template", "templates/patient_form.vtl");
-
-    return new ModelAndView(model, layout);
-  }, new VelocityTemplateEngine());
-
-  post("/doctors/:docId/patients/:id/updateName", (request, response) -> {
-    HashMap<String, Object> model = new HashMap<String, Object>();
-
-    Doctor thisDoctor = Doctor.find(Integer.parseInt(request.params(":docId")));
-
-    String doctorId = request.params(":docId");
-    String patientId = request.params(":id");
-    String patientName = request.queryParams("patient_name");
-
-    Patient currentPatient = Patient.find(Integer.parseInt(request.params(":id")));
-    currentPatient.updateName(patientName);
-
-    model.put("doctor", thisDoctor);
-    response.redirect("/doctors/" + doctorId);
-    return null;
-  });
-
+  // post("/doctors/:docId/patients/:id/updateName", (request, response) -> {
+  //   HashMap<String, Object> model = new HashMap<String, Object>();
+  //
+  //   Doctor thisDoctor = Doctor.find(Integer.parseInt(request.params(":docId")));
+  //
+  //   String doctorId = request.params(":docId");
+  //   String patientId = request.params(":id");
+  //   String patientName = request.queryParams("patient_name");
+  //
+  //   Patient currentPatient = Patient.find(Integer.parseInt(request.params(":id")));
+  //   currentPatient.updateName(patientName);
+  //
+  //   model.put("doctor", thisDoctor);
+  //   response.redirect("/doctors/" + doctorId);
+  //   return null;
+  // });
 
    }
 }
